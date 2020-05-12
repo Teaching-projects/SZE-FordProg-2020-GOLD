@@ -2,10 +2,10 @@
 The aim of this project is to generally get to know how parser generators work. Throughout my learning path I'm using a long forgotten but much as good LALR type parsing system called Grammar Oriented Language Developer aka GOLD (http://www.goldparser.org/grammars/index.htm).
 
 # What are the aims of this project?
-Besides the upper mentioned goals, my aim is to create a cross-platform (Windows/Linux/OSX) parser that can parse and debug in "real-time" grammars created by GOLD Builder.
+Besides the upper mentioned goals, my aim is to create a cross-platform (Windows/Linux/OSX) parser that can parse and debug grammars in "real-time" created by GOLD Builder.
 
-#### Fine, but can't you test your grammer inside the Builder out-of-the-box?!
-Yeah, that's true, however not in cross-platform way (the Builder is only Windows compatible)... anyway it just wouldn't be fun.
+#### Fine, but can't you test your grammar out-of-the-box inside the Builder?!
+Yeah, that's true, however not in cross-platform way (the Builder is only Windows compatible)... anyway it just wouldn't be that much fun.
 
 ## Goals:
   * Porting and refactorization of the original .NET GOLD Engine's source code written in Visual Basic to C#
