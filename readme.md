@@ -7,7 +7,7 @@ Besides the upper mentioned goals, my aim is to create a cross-platform (Windows
 #### Fine, but can't you test your grammar out-of-the-box inside the Builder?!
 Yeah, that's true, however not in cross-platform way (the Builder is only Windows compatible)... anyway it just wouldn't be that much fun.
 
-## Goals:
+## Goals: 
   * Porting and refactorization of the original .NET GOLD Engine's source code written in Visual Basic to C#
   * Correction of bugs
   * Modernization of the code as much as nowadays standards allow
