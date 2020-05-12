@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using GOLD.Engine;
 
@@ -12,71 +10,29 @@ namespace GOLD.Parser
         static Engine.Parser p = new Engine.Parser();
         static void Main(string[] args)
         {
-            p.LoadTables(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "custom.egt"));
-            RecursiveParse();
-        }
-
-        static void OneLineParser()
-        {
-            ParseMessage response;
-            bool done;                      //Controls when we leave the loop
-            bool accepted = false;          //Was the parse successful?
-
-            string text = Console.ReadLine();
-            p.Open(ref text);
-            p.TrimReductions = false;  //Please read about this feature before enabling  
-
-            done = false;
-            while (!done)
+            int l = args.Length;
+            string path = string.Empty;
+            for (int i = 0; i < l; i++)
             {
-                response = p.Parse();
-
-                switch (response)
+                switch (args[i].ToLower())
                 {
-                    case ParseMessage.LexicalError:
-                        //Cannot recognize token
-                        done = true;
+                    case "-f":
+                        path = args[i + 1];
                         break;
 
-                    case ParseMessage.SyntaxError:
-                        //Expecting a different token
-                        done = true;
-                        break;
-
-                    case ParseMessage.Reduction:
-                        //Create a customized object to store the reduction
-                        break;
-
-                    case ParseMessage.Accept:
-                        //Accepted!
-                        //program = parser.CurrentReduction   //The root node!                 
-                        done = true;
-                        accepted = true;
-                        break;
-
-                    case ParseMessage.TokenRead:
-                        //You don't have to do anything here.
-                        break;
-
-                    case ParseMessage.InternalError:
-                        //INTERNAL ERROR! Something is horribly wrong.
-                        done = true;
-                        break;
-
-                    case ParseMessage.NotLoadedError:
-                        //This error occurs if the CGT was not loaded.                   
-                        done = true;
-                        break;
-
-                    case ParseMessage.GroupError:
-                        //GROUP ERROR! Unexpected end of file
-                        done = true;
-                        break;
                 }
             }
 
-            Console.WriteLine(accepted.ToString());
-            Console.ReadKey();
+            if (string.IsNullOrWhiteSpace(path) || !File.Exists(path))
+            {
+                Console.WriteLine("Error: no EGT/CGT file found!");
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+                return;
+            }
+
+            p.LoadTables(path);
+            RecursiveParse();
         }
 
         static void RecursiveParse()
@@ -88,6 +44,7 @@ namespace GOLD.Parser
                 TextReader reader = new StreamReader(ms);
                 p.Open(reader);
                 p.TrimReductions = false;
+                Console.Write("Type your syntax here: ");
                 for (string text = Console.ReadLine(); !text.ToLower().Equals("exit"); text = Console.ReadLine())
                 {
                     Console.WriteLine();
@@ -140,6 +97,7 @@ namespace GOLD.Parser
 
                     Console.WriteLine();
                     Console.WriteLine();
+                    Console.Write("Type your syntax here: ");
                 }
                 reader.Dispose();
             }

@@ -7,6 +7,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GOLD.Engine", "GOLD.Engine\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GOLD.Parser", "GOLD.Parser\GOLD.Parser.csproj", "{9D077079-1406-4721-BE9C-AE92F24995C4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AA94A9B4-2F26-4B9B-A355-BC577BD1CE16}"
+	ProjectSection(SolutionItems) = preProject
+		readme.md = readme.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Grammars", "Grammars", "{C3C0877A-F3E2-437A-A3ED-2D24DCF1DD4B}"
+	ProjectSection(SolutionItems) = preProject
+		Grammars\Brainf#ck.cgt = Grammars\Brainf#ck.cgt
+		Grammars\CS.egt = Grammars\CS.egt
+		Grammars\JavaScript.egt = Grammars\JavaScript.egt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +36,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C3C0877A-F3E2-437A-A3ED-2D24DCF1DD4B} = {AA94A9B4-2F26-4B9B-A355-BC577BD1CE16}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {51BCEFCE-0375-415A-B77C-8C9FA3C6D8B9}
