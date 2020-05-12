@@ -16,6 +16,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Grammars", "Grammars", "{C3
 	ProjectSection(SolutionItems) = preProject
 		Grammars\Brainf#ck.cgt = Grammars\Brainf#ck.cgt
 		Grammars\CS.egt = Grammars\CS.egt
+		Grammars\grammar.egt = Grammars\grammar.egt
+		Grammars\grammar.grm = Grammars\grammar.grm
 		Grammars\JavaScript.egt = Grammars\JavaScript.egt
 	EndProjectSection
 EndProject
