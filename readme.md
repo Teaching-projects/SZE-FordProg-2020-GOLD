@@ -41,22 +41,22 @@ DriveLetter:\path-to-file\GOLD.Parser.exe -f "DriveLetter:\path-to-file\grammar.
 
 Type your syntax here: a+b
 
-        Symbol read: a; Token created: Identifier;      On stack:
-        Shift token: Identifier;                        On stack: Identifier
-        Symbol read: +; Token created: +;               On stack: Identifier
-        Reduce 'Identifier' to 'Value';                 On stack: Value
-        Reduce 'Value' to 'Negate Exp';                 On stack: Negate Exp
-        Reduce 'Negate Exp' to 'Mult Exp';              On stack: Mult Exp
-        Reduce 'Mult Exp' to 'Expression';              On stack: Expression
-        Shift token: +;                                 On stack: Expression +
-        Symbol read: b; Token created: Identifier;      On stack: Expression +
-        Shift token: Identifier;                        On stack: Expression + Identifier
-        Symbol read: ;  Token created: EOF;             On stack: Expression + Identifier
-        Reduce 'Identifier' to 'Value';                 On stack: Expression + Value
-        Reduce 'Value' to 'Negate Exp';                 On stack: Expression + Negate Exp
-        Reduce 'Negate Exp' to 'Mult Exp';              On stack: Expression + Mult Exp
-        Reduce 'Expression' to 'Expression';            On stack: Expression
-        Reduce 'Expression' to 'Program';               On stack: Program
+        Symbol read: a;         Token created: Identifier;      On stack:
+        Shift token: Identifier;                                On stack: 'Identifier'
+        Symbol read: +;         Token created: +;               On stack: 'Identifier'
+        Lookahead: '+';         Reduce: 'Value';                On stack: 'Value'
+        Lookahead: '+';         Reduce: 'Negate Exp';           On stack: 'Negate Exp'
+        Lookahead: '+';         Reduce: 'Mult Exp';             On stack: 'Mult Exp'
+        Lookahead: '+';         Reduce: 'Expression';           On stack: 'Expression'
+        Shift token: +;                                         On stack: 'Expression' '+'
+        Symbol read: b;         Token created: Identifier;      On stack: 'Expression' '+'
+        Shift token: Identifier;                                On stack: 'Expression' '+' 'Identifier'
+        Symbol read: ;          Token created: EOF;             On stack: 'Expression' '+' 'Identifier'
+        Lookahead: 'EOF';       Reduce: 'Value';                On stack: 'Expression' '+' 'Value'
+        Lookahead: 'EOF';       Reduce: 'Negate Exp';           On stack: 'Expression' '+' 'Negate Exp'
+        Lookahead: 'EOF';       Reduce: 'Mult Exp';             On stack: 'Expression' '+' 'Mult Exp'
+        Lookahead: 'EOF';       Reduce: 'Expression';           On stack: 'Expression'
+        Lookahead: 'EOF';       Reduce: 'Program';              On stack: 'Program'
         Accepted!
 
 
@@ -67,22 +67,22 @@ Type your syntax here: exit
 /path-to-file/GOLD.Parser -f "/path-to-file/custom.egt"
 Type your syntax here: a+b
 
-        Symbol read: a; Token created: Identifier;      On stack:
-        Shift token: Identifier;                        On stack: Identifier
-        Symbol read: +; Token created: +;               On stack: Identifier
-        Reduce 'Identifier' to 'Value';                 On stack: Value
-        Reduce 'Value' to 'Negate Exp';                 On stack: Negate Exp
-        Reduce 'Negate Exp' to 'Mult Exp';              On stack: Mult Exp
-        Reduce 'Mult Exp' to 'Expression';              On stack: Expression
-        Shift token: +;                                 On stack: Expression +
-        Symbol read: b; Token created: Identifier;      On stack: Expression +
-        Shift token: Identifier;                        On stack: Expression + Identifier
-        Symbol read: ;  Token created: EOF;             On stack: Expression + Identifier
-        Reduce 'Identifier' to 'Value';                 On stack: Expression + Value
-        Reduce 'Value' to 'Negate Exp';                 On stack: Expression + Negate Exp
-        Reduce 'Negate Exp' to 'Mult Exp';              On stack: Expression + Mult Exp
-        Reduce 'Expression' to 'Expression';            On stack: Expression
-        Reduce 'Expression' to 'Program';               On stack: Program
+        Symbol read: a;         Token created: Identifier;      On stack:
+        Shift token: Identifier;                                On stack: 'Identifier'
+        Symbol read: +;         Token created: +;               On stack: 'Identifier'
+        Lookahead: '+';         Reduce: 'Value';                On stack: 'Value'
+        Lookahead: '+';         Reduce: 'Negate Exp';           On stack: 'Negate Exp'
+        Lookahead: '+';         Reduce: 'Mult Exp';             On stack: 'Mult Exp'
+        Lookahead: '+';         Reduce: 'Expression';           On stack: 'Expression'
+        Shift token: +;                                         On stack: 'Expression' '+'
+        Symbol read: b;         Token created: Identifier;      On stack: 'Expression' '+'
+        Shift token: Identifier;                                On stack: 'Expression' '+' 'Identifier'
+        Symbol read: ;          Token created: EOF;             On stack: 'Expression' '+' 'Identifier'
+        Lookahead: 'EOF';       Reduce: 'Value';                On stack: 'Expression' '+' 'Value'
+        Lookahead: 'EOF';       Reduce: 'Negate Exp';           On stack: 'Expression' '+' 'Negate Exp'
+        Lookahead: 'EOF';       Reduce: 'Mult Exp';             On stack: 'Expression' '+' 'Mult Exp'
+        Lookahead: 'EOF';       Reduce: 'Expression';           On stack: 'Expression'
+        Lookahead: 'EOF';       Reduce: 'Program';              On stack: 'Program'
         Accepted!
 
 
