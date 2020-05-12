@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Grammars", "Grammars", "{C3C0877A-F3E2-437A-A3ED-2D24DCF1DD4B}"
 	ProjectSection(SolutionItems) = preProject
-		Grammars\Brainf#ck.cgt = Grammars\Brainf#ck.cgt
+		Grammars\Brainf#ck.egt = Grammars\Brainf#ck.egt
 		Grammars\CS.egt = Grammars\CS.egt
 		Grammars\grammar.egt = Grammars\grammar.egt
 		Grammars\grammar.grm = Grammars\grammar.grm

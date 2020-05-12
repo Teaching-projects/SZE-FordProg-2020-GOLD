@@ -678,13 +678,8 @@ namespace GOLD.Engine
                             case ParseResult.ReduceNormal:
 
                                 if (debug)
-                                {
-                                    Reduction r = (Reduction)CurrentReduction;
-                                    Token token = r[0];
-                                    string currentToken = token.Parent.Name;
-                                    string reductionName = r.Parent.Head.Name;
-                                    Console.WriteLine("\tReduce '{0}' to '{1}';\tOn stack: {2}", currentToken, reductionName, GetStackState());
-                                }
+                                    Console.WriteLine("\tLookahead: '{0}';\tReduce: '{1}';\tOn stack: {2}", CurrentToken.Parent.Name, ((Reduction)CurrentReduction).Parent.Head.Name, GetStackState());
+
                                 result = ParseMessage.Reduction;
                                 done = true;
                                 break;
@@ -717,7 +712,7 @@ namespace GOLD.Engine
             string onStack = string.Empty;
             for (int i = 0; i < x.Count; i++)
             {
-                onStack += x[i].Parent.Name + " ";
+                onStack += "'" + x[i].Parent.Name + "' ";
             }
 
             return onStack;

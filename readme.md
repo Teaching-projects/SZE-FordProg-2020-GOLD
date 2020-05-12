@@ -27,7 +27,7 @@ Yeah, that's true, however not in cross-platform way (the Builder is only Window
   * Universal parsing app created
 
 # Usage
-  - Generate a EGT/CGT grammar file with GOLD Builder or download one form the site (http://www.goldparser.org/grammars/index.htm).
+  - Generate a EGT grammar file with GOLD Builder or download one form the site (http://www.goldparser.org/grammars/index.htm).
   - Download the parser app from releases tab.
   - Start the parser app from a Prompt/Terminal with [-f] switch followed by the absolute path of the grammar file.
   - Type in the syntax that is waiting to be parsed.

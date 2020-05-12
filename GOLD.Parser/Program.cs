@@ -25,7 +25,7 @@ namespace GOLD.Parser
 
             if (string.IsNullOrWhiteSpace(path) || !File.Exists(path))
             {
-                Console.WriteLine("Error: no EGT/CGT file found!");
+                Console.WriteLine("Error: no EGT file found!");
                 Console.WriteLine("Press any key to continue...");
                 Console.ReadKey();
                 return;
@@ -58,15 +58,12 @@ namespace GOLD.Parser
                         response = p.Parse(true);
                         switch (response)
                         {
+                            case ParseMessage.SyntaxError:
                             case ParseMessage.LexicalError:                               
                                 ms.SetLength(0);
                                 ms.Position = 0;
                                 reader = new StreamReader(ms);
                                 p.Open(reader);
-                                done = true;
-                                break;
-
-                            case ParseMessage.SyntaxError:
                                 done = true;
                                 break;
 
