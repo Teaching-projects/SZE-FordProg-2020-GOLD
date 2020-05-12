@@ -5,7 +5,7 @@ The aim of this project is to generally get to know how parser generators work. 
 Besides the upper mentioned goals, my aim is to create a cross-platform (Windows/Linux/OSX) parser that can parse and debug grammars in "real-time" created by GOLD Builder.
 
 #### Fine, but can't you test your grammar out-of-the-box inside the Builder?!
-Yeah, that's true, however not in cross-platform way (the Builder is only Windows compatible)... anyway it just wouldn't be that much fun.
+Yeah, that's true, however not in cross-platform manner (the Builder is only Windows compatible)... anyway it just wouldn't be that much fun.
 
 ## Goals: 
   * Porting and refactorization of the original .NET GOLD Engine's source code written in Visual Basic to C#
@@ -27,7 +27,7 @@ Yeah, that's true, however not in cross-platform way (the Builder is only Window
   * Universal parsing app created
 
 # Usage
-  - Generate a EGT grammar file with GOLD Builder or download one form the site (http://www.goldparser.org/grammars/index.htm).
+  - Generate an EGT grammar file with GOLD Builder or download one form the site (http://www.goldparser.org/grammars/index.htm).
   - Download the parser app from releases tab.
   - Start the parser app from a Prompt/Terminal with [-f] switch followed by the absolute path of the grammar file.
   - Type in the syntax that is waiting to be parsed.
@@ -64,7 +64,7 @@ Type your syntax here: exit
 ```
 ### On Linux:
 ```
-/path-to-file/GOLD.Parser -f "/path-to-file/custom.egt"
+/path-to-file/GOLD.Parser -f "/path-to-file/grammar.egt"
 Type your syntax here: a+b
 
         Symbol read: a;         Token created: Identifier;      On stack:
