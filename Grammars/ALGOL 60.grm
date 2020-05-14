@@ -1,0 +1,504 @@
+! ----------------------------------------------------------------------------
+! ALGOL 60
+!
+! (ALGO)rithmic (L)anguage
+!
+! ALGOL is, by far, the most influential programming language developed to 
+! date. Although is did not achieve mass use, a large number of syntactic 
+! and semantic principles and concepts were developed and incorporated into 
+! the language. As a result, ALGOL is considered the main reference language 
+! in computer science. 
+! 
+! In the late 1950's, many in the study of computer science believed that a 
+! new universal programming language was needed. This new language would be 
+! used through the study of computer science and would eventually replace 
+! other popular languages such as FORTRAN. 
+! 
+! The ACM (Association for Computing Machinery) and GAMM (a European 
+! organization of mathematics and mechanics) created an international 
+! committee to define and document the new language. This committee 
+! included computer scientists from both North America and Europe. 
+! 
+! The process of developing ALGOL included a number of challenges: 
+! 
+! First, the computers of the era varied greatly in the number of characters 
+! that could be represented. This made it difficult to define the exact 
+! lexics of the language. For instance, one mainframe could contain an 
+! ampersand character (&) while another may not. 
+! 
+! Another challenge involved an issue that nowadays seems trival - the 
+! representation of decimal points. In the 50 United States and Canada, real 
+! numbers are represented using a period. For instance, the value 4 1/2 can 
+! be written as "4.5". Europe, on the other hand, uses a comma. The same 
+! value is represented with "4,5". Both sides were steadfast that their 
+! format was superior. Although the "period" format would eventually 
+! dominate, this was a major issue at the time. 
+! 
+! To describe the syntax of the first version of ALGOL, Peter Naur modified 
+! Backus Normal Form to create Backus-Naur Form. This format is now used 
+! universially to describe the syntax of programming languages. 
+! 
+! To spite these challenges, ALGOL created a number of language features 
+! that would be incorporated into its numerious successors. These include: 
+! 
+! * Block structure 
+! * Free-form structure (elements are not required to be in a specific column) 
+! * Pass by Name  (while powerful, it is not used in modern languages) 
+! * The For-Loop 
+! * The 'Else' clause on if-statements (LISP's 'cond' predates this though) 
+! * Reserved words 
+! 
+! The grammar below was, for the most part, cut and pasted from "Revised 
+! Report on the Algorithmic Language: Algol 60" by Peter Naur. The numbered
+! sections refer directly to the chapters in the Report. 
+!
+! The grammar was modified to remove ambigities and define terminals using
+! regular expressions.
+!
+! ----------------------------------------------------------------------------
+
+
+"Name"      = 'ALGOL 60'
+"Version"   = '1960'
+
+"Author"    = 'J.W. Backus, F.L. Bauer, J.Green, C. Katz, J. McCarthy, P. Naur,'
+            | 'A.J. Perlis, H. Rutishauser, K. Samuelson, B. Vauquois,'
+            | 'J.H. Wegstein, A. van Wijngaarden, M. Woodger'
+
+"About"     = 'ALGOL (ALGOrithmic Language) is the most influential'
+            | 'programming language to date. Although it did not achieve'
+            | 'mass use, it established multiple syntactic and semantic'
+            | 'features used in languages today.'
+
+
+"Start Symbol" = <program>
+
+
+! ========================================================== Terminals
+
+
+{String Ch}    = {Printable} - [`] - ['']
+
+Identifier     = {Letter}{Alphanumeric}*
+
+String         = '`' ( '`' {String Ch}* '' | {String Ch} )* ''
+
+IntegerLiteral = {Digit}+ 
+RealLiteral    = {Digit}+ '.' {Digit}+  (e {Digit}+)?
+
+
+! =========================================================== Rules
+
+<unsigned integer> 
+        ::= IntegerLiteral
+         
+<unsigned number>          
+        ::= IntegerLiteral
+         |  RealLiteral
+
+
+! ====================================================================
+! 2.2.2 Logical values.
+! ====================================================================
+
+<logical value> ::= true | false
+
+
+
+! ====================================================================
+! 3. Expressions
+! ====================================================================
+
+<expression> 
+       ::= <Boolean expression> 
+          
+
+! ====================================================================
+! 3.1. Variables
+! ====================================================================
+
+<subscript expression> 
+        ::= <arithmetic expression>
+
+<subscript list> 
+        ::= <subscript expression> 
+         |  <subscript list> ',' <subscript expression>
+
+
+<variable> 
+        ::= Identifier
+         |  Identifier '[' <subscript list> ']'      ! subscripted value
+
+! ====================================================================
+! 3.2. Function designators
+! ====================================================================
+
+<actual parameter> 
+        ::= String
+         |  <expression>
+
+<parameter delimiter> 
+        ::= ',' 
+         |  ')' Identifier ':' '('
+
+
+<actual parameter list> 
+        ::= <actual parameter>  
+         |  <actual parameter list> <parameter delimiter> <actual parameter>
+
+
+! ====================================================================
+! 3.3. Arithmetic expressions
+! ====================================================================
+
+<adding operator> ::= '+' | '-'
+
+<multiplying operator> ::=  '*' | '/' | 'div'       
+
+<primary> 
+        ::= <unsigned number>
+         |  <variable>
+         |  Identifier '(' <actual parameter list> ')'
+         |  '(' <arithmetic expression> ')'
+
+<factor> 
+       ::= <primary> 
+         | <factor> '^' <primary>     !Originally an up-arrow                          
+       
+<term> 
+        ::= <factor> 
+         |  <term> <multiplying operator> <factor>
+
+
+<simple arithmetic expression> 
+        ::= <term> 
+         |  <adding operator> <term>
+         |  <simple arithmetic expression> <adding operator> <term>
+
+<if clause> ::= if <Boolean expression> then
+
+<arithmetic expression> 
+        ::= <simple arithmetic expression>
+         |  <if clause> <simple arithmetic expression> else <arithmetic expression>
+
+
+
+! ====================================================================
+! 3.4. Boolean expressions
+! ====================================================================
+
+<relational operator> ::= '<' | '<=' | '=' | '>=' | '>' | '~='
+
+
+<relation> 
+        ::= <relation> <relational operator> <simple arithmetic expression>
+         |  <simple arithmetic expression>  
+
+<Boolean primary> 
+        ::= <logical value>
+         |  <relation> 
+
+<Boolean secondary> 
+        ::= <Boolean primary> 
+         |  not <Boolean primary>
+
+
+<Boolean factor> 
+        ::= <Boolean secondary>
+         |  <Boolean factor> and <Boolean secondary>
+
+<Boolean term> 
+        ::= <Boolean factor> 
+         |  <Boolean term> or <Boolean factor>
+
+<implication> 
+        ::= <Boolean term> 
+         |  <implication> implies <Boolean term>
+
+<simple Boolean> 
+        ::= <implication>
+         |  <simple Boolean> eqv <implication>
+
+
+<Boolean expression> 
+        ::= <simple Boolean> 
+         |  <if clause> <simple Boolean> else <Boolean expression>
+
+
+! ====================================================================
+! 3.5. Designational expressions
+! ====================================================================
+
+<label> 
+       ::= Identifier
+        |  <Unsigned Integer>
+
+<switch designator>
+       ::= Identifier '[' <subscript expression> ']'
+
+<simple designational expression> 
+       ::= <label> 
+        |  <switch designator> 
+        | '(' <designational expression> ')'
+
+<designational expression> 
+       ::= <simple designational expression> 
+        |  <if clause> <simple designational expression> else <designational expression>
+
+
+! ====================================================================
+! 4.1. Compound statements and blocks
+! ====================================================================
+
+<unlabelled basic statement> 
+        ::= <assignment statement> 
+         |  <go to statement>
+         |  !EMPTY                 !dummy statement 
+         |  <procedure statement>
+
+
+<basic statement> 
+        ::= <unlabelled basic statement>
+         |  <label> ':' <basic statement>
+
+<unconditional statement> 
+        ::= <basic statement> 
+         |  <compound statement> 
+         |  <block>
+
+<statement> 
+        ::= <unconditional statement>
+         |  <conditional statement>
+         |  <for statement>
+
+<compound tail> 
+        ::= <statement> end 
+         |  <statement> ';' <compound tail>
+
+<block head> 
+        ::= begin <declaration> 
+         |  <block head> ';' <declaration>
+
+<unlabelled block> 
+        ::= <block head> ';' <compound tail>
+
+<unlabelled compound> 
+        ::= begin <compound tail>
+
+<compound statement> 
+        ::= <unlabelled compound> 
+         |  <label> ':' <compound statement>
+
+<block> 
+        ::= <unlabelled block>
+         |  <label> ':' <block>
+
+<program> 
+        ::= <block> 
+         |  <compound statement>
+
+
+! ====================================================================
+! 4.2. Assignment statements
+! ====================================================================
+
+<left part> 
+        ::= <variable> ':=' 
+
+
+<left part list> 
+        ::= <left part> 
+         |  <left part list> <left part>
+
+<assignment statement> 
+        ::= <left part list> <Boolean expression>
+
+
+ 
+! ====================================================================
+! 4.3. Go to statements
+! ====================================================================
+
+<go to statement> ::= goto <designational expression>
+
+
+! ====================================================================
+! 4.4. Dummy statements
+! ====================================================================
+
+!<dummy statement> ::= <empty>
+
+
+! ====================================================================
+! 4.5. Conditional statements
+! ====================================================================
+
+<if statement> ::= <if clause> <unconditional statement>
+
+<conditional statement> 
+       ::= <if statement> 
+        |  <if statement> else <statement> 
+        |  <if clause> <for statement> 
+        |  <label> ':' <conditional statement>
+
+
+! ====================================================================
+! 4.6. For statements
+! ====================================================================
+
+<for list element> 
+       ::= <arithmetic expression> 
+        |  <arithmetic expression> step <arithmetic expression> until <arithmetic expression>
+        |  <arithmetic expression> while <Boolean expression>
+
+<for list> 
+       ::= <for list element> 
+        |  <for list> ',' <for list element>
+
+<for clause> ::= for <variable> ':=' <for list> do
+
+<for statement> 
+       ::= <for clause> <statement> 
+        |  <label> ':' <for statement>
+
+
+! ====================================================================
+! 4.7. Procedure statements
+! ====================================================================
+
+
+<procedure statement> 
+        ::= Identifier '(' <actual parameter list> ')'
+         |  Identifier 
+
+
+! ====================================================================
+! 5. Declarations
+! ====================================================================
+
+<declaration> 
+       ::= <type declaration>
+        |  <array declaration>
+        |  <switch declaration>
+        |  <procedure declaration>
+
+
+! ====================================================================
+! 5.1. Type declarations
+! ====================================================================
+
+<type list> 
+       ::= Identifier 
+        |  Identifier ',' <type list>
+
+<type> 
+       ::= real 
+        |  integer 
+        |  Boolean
+
+<local or own type> 
+       ::= <type> 
+        |  own <type>
+
+<type declaration> 
+       ::= <local or own type> <type list>
+
+
+! ====================================================================
+! 5.2. Array declarations
+! ==================================================================== 
+ 
+<lower bound> ::= <arithmetic expression>
+ 
+<upper bound> ::= <arithmetic expression>
+ 
+<bound pair>  ::= <lower bound> ':' <upper bound>
+ 
+<bound pair list> 
+       ::= <bound pair> 
+        |  <bound pair list> ',' <bound pair>
+ 
+<array segment> 
+       ::= Identifier '[' <bound pair list> ']' 
+        |  Identifier ',' <array segment>
+ 
+<array list> 
+       ::= <array segment> 
+        |  <array list> ',' <array segment>
+ 
+<array declaration> 
+       ::= array <array list> 
+        |  <local or own type> array <array list>
+ 
+
+! ====================================================================
+! 5.3. Switch declarations
+! ====================================================================
+
+<switch list> 
+       ::= <designational expression> 
+        |  <switch list> ',' <designational expression>
+
+<switch declaration> 
+       ::= switch Identifier ':=' <switch list>
+
+
+! ====================================================================
+! 5.4. Procedure declarations
+! ====================================================================
+
+<formal parameter> 
+        ::= Identifier
+
+<formal parameter list> 
+        ::= <formal parameter>
+         |  <formal parameter list> <parameter delimiter> <formal parameter>
+
+<formal parameter part> 
+        ::= !EMPTY 
+         | '(' <formal parameter list> ')'
+
+<identifier list> 
+        ::= Identifier
+         |  <identifier list> ',' Identifier
+
+<value part> 
+        ::= value <identifier list> ';' 
+         |  !EMPTY
+
+<specifier> 
+        ::= string 
+         |  <type>
+         |  array
+         |  <type> array
+         |  label
+         |  switch
+         |  procedure
+         |  <type> procedure
+
+<specification part> 
+        ::= !EMPTY
+         | <specification>
+  
+!=== The following rule was added
+
+<specification>
+        ::=                 <specifier> <identifier list> ';'
+         |  <specification> <specifier> <identifier list> ';'
+
+
+
+<procedure heading> 
+        ::= Identifier <formal parameter part> ';' <value part> <specification part>
+
+<procedure body> 
+        ::= <statement>         
+!!!      |  <code>             !<code> refers to any embedded non-Algol code         
+         
+
+<procedure declaration> 
+        ::=        procedure <procedure heading> <procedure body> 
+         |  <type> procedure <procedure heading> <procedure body>
+
+
+

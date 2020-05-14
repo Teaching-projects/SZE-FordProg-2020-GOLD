@@ -1,0 +1,13 @@
+
+"Name"      = 'Number Example'
+"Author"    = 'Devin Cook'
+"About"     = 'This example shows the definitions for standard integer and floating point literals.'
+
+"Start Symbol" = <Value>
+
+Integer        = {Digit}+
+Float          = {Digit}+ '.' {Digit}+
+
+<Value>   ::= Integer
+            | Float
+

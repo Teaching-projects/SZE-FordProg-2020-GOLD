@@ -1,0 +1,73 @@
+! -----------------------------------------------------------------------
+! LISP
+!
+! LISt Programming
+!
+!    "One can even conjecture that Lisp owes its survival specifically to the 
+!     fact that its programs are lists, which everyone, including me, has 
+!     regarded as a disadvantage."
+!
+!     - John McCarthy, "Early History of Lisp"
+!
+!
+!    "Lisp is worth learning for the profound enlightenment experience you will 
+!     have when you finally get it; that experience will make you a better programmer
+!     for the rest of your days, even if you never actually use Lisp itself a lot."
+!  
+!     - Eric Raymond, "How to Become a Hacker"
+!
+!
+!    "Lisp was far more powerful and flexible than any other language of its day; in 
+!     fact, it is still a better design than most languages of today, twenty-five 
+!     years later. Lisp freed ITS's hackers to think in unusual and creative ways. It 
+!     was a major factor in their successes, and remains one of hackerdom's favorite 
+!     languages."
+!
+!     - Eric Raymond, in Open Sources on MIT's first OS, ITS 
+!
+! The LISP programming language is one of the oldest still use today; second only to 
+! FORTRAN. It was invented by mathematician John McCarthy and organizes information into
+! abstract "lists". This metaphor is used universially for both data and functions; 
+! in fact, the LISP runtime engine makes no differentiation between the two. This allows 
+! the programmer to perform actions that would be impossible in most programming languages 
+! such as, but not limited to, passing code as a parameter to a function, executing data, 
+! and modifying the program at runtime.
+!
+! For more information on LISP, please visit www.lisp.org.
+!
+! Updates:
+!    3/5/2003: Added dotted pairs and backslash overrides to the language.
+!
+! Note: This is an ad hoc version of the language. If there are any flaws, 
+! please visit www.DevinCook.com/GOLDParser and I will update the grammar. 
+!
+!
+! -----------------------------------------------------------------------
+
+
+"Name"    = 'LISP'
+"Author"  = 'John McCarthy'
+"Version" = 'Standard'
+"About"   = 'LISP is an abstract language that organizes ALL data around "lists".'
+
+"Start Symbol" = <s-Expression>
+
+{Atom Char}   = {Printable} - {Whitespace} - [()"\'']
+{String Char} = {Printable} - ["\]
+
+Atom   = ( {Atom Char} | '\'{Printable} )+
+
+String = '"' ( {String Char} | '\'{Printable} )* '"'
+
+
+<s-Expression> ::= <Quote> Atom
+                 | <Quote> '(' <Series> ')'
+                 | <Quote> '(' <s-Expression> '.' <s-Expression> ')'   !Dotted Pair
+                 | String                                              !Strings are never evaluated
+
+<Series> ::= <s-Expression> <Series>
+           |
+
+<Quote>  ::= ''          !Quote = do not evaluate
+           |
+

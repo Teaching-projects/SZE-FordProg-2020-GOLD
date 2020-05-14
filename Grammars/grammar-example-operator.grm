@@ -1,0 +1,25 @@
+"Name"    = 'Operator Precedence Example'
+"Author"  = 'Devin Cook'
+"Version" = 'Example'
+"About"   = 'This grammar demonstrates operator precedence."'
+
+"Case Sensitive" = 'False'
+"Start Symbol"   = <Expression>
+
+ID        = {Letter}{AlphaNumeric}*
+Integer   = {Digit}+
+
+<Expression>   ::= <Expression> '+' <Mult Exp> 
+                 | <Expression> '-' <Mult Exp> 
+                 | <Mult Exp> 
+
+<Mult Exp>    ::= <Mult Exp> '*' <Negate Exp> 
+                | <Mult Exp> '/' <Negate Exp> 
+                | <Negate Exp> 
+
+<Negate Exp>  ::= '-' <Value> 
+                | <Value> 
+
+<Value>       ::= ID 
+                | Integer
+                | '(' <Expression> ')'

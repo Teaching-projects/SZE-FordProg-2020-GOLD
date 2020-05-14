@@ -1,0 +1,182 @@
+! -----------------------------------------------------------------------
+! SmallTalk IV
+!
+! The first object-oriented programming language.
+!
+!     "Smalltalk was developed in the Learning Research Group at Xerox's Palo
+!      Alto Research Center in the early 70s. The major ideas in Smalltalk 
+!      are generally credited to Alan Kay with many roots in Simula, LISP 
+!      and SketchPad. Dan Engalls wrote the first overlapping windows, opaque
+!      pop-up menus and BitBlt. Guess where Apple's OS and Microsoft Windows
+!      "found" their roots? Right, Smalltalk! Adele Goldberg and Dave Robson
+!      wrote the reference manuals for Smalltalk and were key development team
+!      members." 
+!
+!      - Randy Best, STIC Director
+!
+!
+!     "Why Smalltalk? Smalltalk uses a simplified version of English. Nouns 
+!      and verbs. Object are the nouns. Verbs are messages sent from one 
+!      object to the next. Easy as 1, 2, 3. It is no longer necessary to  
+!      write cryptic programs. This means that almost anyone can learn to
+!      write Smalltalk programs." 
+!       
+!      - Peter William Lount 
+!
+!
+!     "I invented the term Object-Oriented, and I can tell you I did not have
+!      C++ in mind." 
+!
+!      - Alan Kay (Inventor of Smalltalk)
+!
+! The Smalltalk programming language was the first language to incorporate the
+! concept of object-oriented programming. Developed in the Xerox labs at Palo
+! Alto, Smalltalk was one of a series of ground-breaking ideas that defined
+! modern computer science. 
+!
+! In the language's metaphor, everything is an object and every interaction 
+! between objects are known as messages. Due to a strict adherence to this 
+! concept, Smalltalk is recognized as a pure object-oriented language.
+! 
+! For more information, please visit:  http://www.smalltalk.org
+! 
+! The SmallTalk grammar is amazingly simple with only three levels of 
+! operator precedence. In addition, the grammar contains no reserved words,
+! and only a minimum of symbols. As a result, Smalltalk programs are mainly 
+! (if not entirely) defined by programmar-defined objects and method names.
+!
+! This is version IV of the grammar, which allows methods to be defined, but
+! not yet the objects themselves.
+!
+! It should also be noted that comments in SmallTalk are defined as a series 
+! of characters delimited by Double-Quotes ("). The 'Comment Start' and 
+! 'Comment End' terminals in the normal GOLD Parser Builder Grammar cannot
+! be used since the start and end terminals are identical. However, since
+! they are identical, Smalltalk comments cannot be nested and the normal
+! 'Whitespace' terminal can be used.
+!
+! Note: This is an ad hoc version of the grammar. If there are any flaws, 
+! please e-mail GOLDParser@DevinCook.com and I will update the grammar. 
+! -----------------------------------------------------------------------
+
+
+"Name"    = 'Smalltalk IV'
+"Author"  = 'Alan Kay'
+"Version" = 'IV'
+"About"   = 'Smalltalk is considered one of the "purest" object-oriented'
+          | 'languages ever created.'
+
+
+"Case Sensitive" = True
+
+"Start Symbol" = <Program>
+
+
+{Id Tail}       = {Alphanumeric} + [_]
+{Integer Tail}  = [ABCDEFGHIJKLMNOPQRSTUVWXYZ] + {Digit}
+{String Chars}  = {Printable} - ['']
+{Selector Char} = [!%&*+/<=>?@\~,]
+{Comment Char}  = {Printable} + {Whitespace} - ["]
+
+! The whitespace character has been modified to accept all double-quoted strings
+Whitespace = {Whitespace}+ | '"'{Comment Char}*'"'
+
+! The Keyword token is used in SmallTalk to represent a binary message. Essentially,
+! this is an object defined operator
+KeyWord          = {Letter}{Id Tail}*':'
+
+Identifier       = {Letter}{Id Tail}*
+BinarySelector  = {Selector Char}+                              
+IntegerLiteral  = {Digit}+ | {Digit}+ 'r' {Integer Tail}+
+FloatLiteral    = {Digit}+ '.'{Digit}+ ( [edq] '-'? {Digit}+ )?                               
+ScaledLiteral   = {Digit}+ ( '.' {Digit}+ )? 's' ( {Digit}+ )?     
+QuotedString    =  '' ( {String Chars} | '' '' )*  ''  
+
+
+! ---------------------------------------------------- Grammar rules
+<Program> ::= <Temporaries>  <Sentences>
+   
+
+<Temporaries> ::= '|' '|'
+                | '|' <Identifier List> '|'
+                |
+      
+
+<Identifier List> ::= <Identifier List> Identifier
+                    | Identifier
+    
+    
+<Sentences> ::= <Sentence List>
+              |
+
+<Sentence List> ::= <Sentence List> <Expresion> '.'
+                  | <Expresion> '.'
+    
+! ---------------------------------------------------- Expressions
+<Expresion> ::= Identifier ':=' <Message Exp>
+              | Identifier ':=' <Primary>
+              | <Message Exp>
+              | <Primary>
+   
+<Primary> ::= Identifier
+            | <Literal>
+            | <Block>
+            | '(' <Message Exp> ')'
+            | '(' <Primary> ')'
+
+<Message Exp> ::= <Unary Exp>
+                | <Binary Exp>
+                | <KeyWord Exp>
+   
+<Unary Exp>  ::= <Primary> <Unary Exp List> 
+    
+
+<Unary Exp List> ::= <Unary Exp List> <Unary Message>
+                   | <Unary Message>
+    
+<Binary Exp> ::= <Unary Exp>  <Binary Exp List>
+               | <Primary> <Binary Exp List>
+
+<Binary Exp List> ::= <Binary Exp List> <Binary Message>
+                    | <Binary Message>
+    
+<KeyWord Exp> ::= <Binary Exp> <KeyWord Message>
+                | <Primary> <KeyWord Message>
+                | <Unary Exp> <KeyWord Message>
+    
+! ---------------------------------------------------- Messages
+<Unary Message> ::= <Unary Selector>
+    
+<Binary Message> ::= <Binary Selector> <Unary Exp>
+                   | <Binary Selector> <Primary>
+    
+<KeyWord Message> ::= KeyWord <Binary Exp>  <KeyWord Message>
+                    | KeyWord <Primary> <KeyWord Message>
+                    | KeyWord <Primary>
+                    | KeyWord <Binary Exp>
+                    | KeyWord <Unary Exp> <KeyWord Message>
+                    | KeyWord <Unary Exp>
+    
+<Block> ::= '[' ':' Identifier '|' <Sentences> ']'
+          | '[' <Sentences> ']'
+
+
+<Binary Selector> ::= BinarySelector
+   
+
+<Unary Selector> ::= Identifier
+
+! ---------------------------------------------------- Literals
+<Literal> ::= <Literal Item>
+            | '#' '(' ')'
+            | '#' '(' <Literal List> ')'
+
+<Literal List> ::= <Literal List> <Literal Item>
+
+
+<Literal Item> ::= IntegerLiteral
+                 | QuotedString
+                 | FloatLiteral
+                 | ScaledLiteral 
+    
+

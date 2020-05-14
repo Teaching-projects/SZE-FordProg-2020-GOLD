@@ -1,0 +1,18 @@
+"Name"    = 'Phone Number Example'
+"Author"  = 'Devin Cook'
+"About"   = 'This is the grammar definition for the US/Canada phone system'
+
+"Start Symbol" = <Phone Number>
+
+
+Num3 = {Digit}{Digit}{Digit}
+Num4 = {Digit}{Digit}{Digit}{Digit}
+
+
+<Phone Number>  ::= <Area Code> Num3 '-' Num4
+                  | Num3 '-' Num4
+
+<Area Code>     ::= '(' Num3 ')' 
+                  | Num3 '-'
+                  | Num3 '/'                  
+                  

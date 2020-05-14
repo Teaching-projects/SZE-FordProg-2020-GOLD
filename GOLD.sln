@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GOLD.Engine", "GOLD.Engine\GOLD.Engine.csproj", "{DB944844-9E8B-44C2-B36E-54DDC4073F8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GOLD.Engine", "GOLD.Engine\GOLD.Engine.csproj", "{DB944844-9E8B-44C2-B36E-54DDC4073F8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GOLD.Parser", "GOLD.Parser\GOLD.Parser.csproj", "{9D077079-1406-4721-BE9C-AE92F24995C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GOLD.Parser", "GOLD.Parser\GOLD.Parser.csproj", "{9D077079-1406-4721-BE9C-AE92F24995C4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AA94A9B4-2F26-4B9B-A355-BC577BD1CE16}"
 	ProjectSection(SolutionItems) = preProject
@@ -14,11 +14,56 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Grammars", "Grammars", "{C3C0877A-F3E2-437A-A3ED-2D24DCF1DD4B}"
 	ProjectSection(SolutionItems) = preProject
+		Grammars\ALGOL 60.egt = Grammars\ALGOL 60.egt
+		Grammars\ALGOL 60.grm = Grammars\ALGOL 60.grm
+		Grammars\BASIC-64.egt = Grammars\BASIC-64.egt
+		Grammars\BASIC-64.grm = Grammars\BASIC-64.grm
 		Grammars\Brainf#ck.egt = Grammars\Brainf#ck.egt
-		Grammars\CS.egt = Grammars\CS.egt
+		Grammars\Brainf#ck.grm = Grammars\Brainf#ck.grm
+		Grammars\C# 2.0 r7.egt = Grammars\C# 2.0 r7.egt
+		Grammars\C# 2.0 r7.grm = Grammars\C# 2.0 r7.grm
+		Grammars\C-ANSI.egt = Grammars\C-ANSI.egt
+		Grammars\C-ANSI.grm = Grammars\C-ANSI.grm
+		Grammars\COBOL 85.egt = Grammars\COBOL 85.egt
+		Grammars\COBOL 85.grm = Grammars\COBOL 85.grm
+		Grammars\Commodore-BASIC.egt = Grammars\Commodore-BASIC.egt
+		Grammars\Commodore-BASIC.grm = Grammars\Commodore-BASIC.grm
+		Grammars\css.egt = Grammars\css.egt
+		Grammars\css.grm = Grammars\css.grm
+		Grammars\grammar-example-identifiers.egt = Grammars\grammar-example-identifiers.egt
+		Grammars\grammar-example-identifiers.grm = Grammars\grammar-example-identifiers.grm
+		Grammars\grammar-example-numbers.egt = Grammars\grammar-example-numbers.egt
+		Grammars\grammar-example-numbers.grm = Grammars\grammar-example-numbers.grm
+		Grammars\grammar-example-operator.egt = Grammars\grammar-example-operator.egt
+		Grammars\grammar-example-operator.grm = Grammars\grammar-example-operator.grm
+		Grammars\grammar-example-strings-c.grm = Grammars\grammar-example-strings-c.grm
+		Grammars\grammar-example-strings.grm = Grammars\grammar-example-strings.grm
+		Grammars\grammar-phone-number.egt = Grammars\grammar-phone-number.egt
+		Grammars\grammar-phone-number.grm = Grammars\grammar-phone-number.grm
 		Grammars\grammar.egt = Grammars\grammar.egt
 		Grammars\grammar.grm = Grammars\grammar.grm
+		Grammars\HTML.egt = Grammars\HTML.egt
+		Grammars\HTML.grm = Grammars\HTML.grm
+		Grammars\Java 2.0.egt = Grammars\Java 2.0.egt
+		Grammars\Java 2.0.grm = Grammars\Java 2.0.grm
 		Grammars\JavaScript.egt = Grammars\JavaScript.egt
+		Grammars\JavaScript.grm = Grammars\JavaScript.grm
+		Grammars\JSON.egt = Grammars\JSON.egt
+		Grammars\JSON.grm = Grammars\JSON.grm
+		Grammars\LISP.egt = Grammars\LISP.egt
+		Grammars\LISP.grm = Grammars\LISP.grm
+		Grammars\pascal.egt = Grammars\pascal.egt
+		Grammars\pascal.grm = Grammars\pascal.grm
+		Grammars\Simple 2.egt = Grammars\Simple 2.egt
+		Grammars\Simple 2.grm = Grammars\Simple 2.grm
+		Grammars\smalltalk-iv.egt = Grammars\smalltalk-iv.egt
+		Grammars\smalltalk-iv.grm = Grammars\smalltalk-iv.grm
+		Grammars\SQL-ANSI-89.egt = Grammars\SQL-ANSI-89.egt
+		Grammars\SQL-ANSI-89.grm = Grammars\SQL-ANSI-89.grm
+		Grammars\XML.egt = Grammars\XML.egt
+		Grammars\XML.grm = Grammars\XML.grm
+		Grammars\yacc.egt = Grammars\yacc.egt
+		Grammars\yacc.grm = Grammars\yacc.grm
 	EndProjectSection
 EndProject
 Global

@@ -1,0 +1,20 @@
+
+"Name"         = 'String Terminal Example'
+"Author"       = 'Devin Cook'
+"About"        = 'This is a simple example which defines a basic string'
+
+"Start Symbol" = <Value>
+
+! The following defines a set of characters for the string. It contains 
+! all printable characters with the exceptionof the double-quotes used 
+! for delimiters. The {Printable} set does not contain newlines.
+
+{String Ch} = {Printable} - ["]
+
+! This statement defines the string symbol
+
+String     = '"' {String Ch}* '"'
+
+
+<Value>   ::= String
+

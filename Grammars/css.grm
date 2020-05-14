@@ -1,0 +1,133 @@
+!*
+---------------------------------------------------------------------
+Cascading Style Sheets  
+ 
+ 
+Cascading Style Sheets was originally proposed in 1994 by Hakon Wium 
+Lie during "Mosaic and the Web" conference in Chicago.  
+ 
+Shortly afterwards, Hakon Wium Lie teamed up with Bert Bos who was 
+developing a web browser called "Argo". Together the format of the 
+first Cascading Style Sheets was developed and, with Thomas Reardon 
+of Microsoft, was submitted to the W3C Committee in late 1996.  
+ 
+This grammar defines the format used by Cascading Style Sheets. This
+type of file is used by web pages to define different "styles". Each
+style contains a number of colors, fonts, borders and other 
+attributes that affect how different HTML elements will be displayed. 
+ 
+Note: This is an ad hoc version of the language. If there are any 
+flaws, please visit www.DevinCook.com/GOLDParser.  
+-----------------------------------------------------------
+*!
+
+
+"Name"      = 'CSS'
+"Version"   = 'CSS1 - 1996'
+"Author"    = 'Hakon Wium Lie and Bert Bos'
+"About"     = 'Cascading Style Sheets'
+
+
+
+"Case Sensitive" = True
+"Start Symbol"   = <StyleSheet>
+
+
+! --------------------------------------------------------------- Terminals
+
+{ID Char}   = {AlphaNumeric} + [-]
+{HexDigit}  = {Digit} + [abcdef]
+{String Ch} = {Printable} - ['']
+
+
+ID            = {Letter} ( {AlphaNumeric} | '-' {AlphaNumeric} )*
+ClassID       = '.' {Letter} ( {AlphaNumeric} | '-' {AlphaNumeric} )*
+
+ColorRGB      = '#' {HexDigit}+
+Number        = {Digit}+ ('.' {Digit}+)?
+StringLiteral = '' {String Ch}* ''
+
+Comment Start = '/*'
+Comment End   = '*/'
+
+! --------------------------------------------------------------- Rules
+
+<StyleSheet> ::= <Style> <StyleSheet>
+               |
+
+<Style>      ::= <Style ID List> '{' <Attributes> '}'
+
+
+<Style ID List>  ::= <Style IDs> ',' <Style ID List> 
+                   | <Style IDs>  
+
+<Style IDs>  ::= <Style ID> <Style IDs>  
+               | <Style ID> 
+
+<Style ID>   ::= ID
+               | ID <Pseudo Class> 
+               | ClassID 
+               | ClassID <Pseudo Class> 
+
+! -------------------------------------------------------------------
+
+<Attributes>  ::= <Attribute> <Attributes>
+                | 
+                                
+<Attribute>   ::= <Attrib ID List> ':' <Attrib Values> ';'  
+
+<Attrib ID List> ::= ID ',' <Attrib ID List>
+                   | ID
+
+<Attrib Values>  ::= <Values> <Important Opt> ',' <Attrib Values>
+                   | <Values> <Important Opt>
+           
+           
+<Values>  ::= <Value> <Values>
+            | <Value>
+
+<Value>   ::= Number
+            | Number <Unit>
+            | ID
+            | StringLiteral
+            | ColorRGB
+            | ID '(' <Params> ')'          !Function call
+            | ID '(' ')'                   !Function call
+
+            
+<Params>  ::= <Value> ',' <Params>
+            | <Value>
+            
+
+<Unit>    ::= em    ! The height of the element's font.
+            | ex    ! The height of the letter "x"
+            | px    ! Pixels
+            | '%'   ! Percentage
+            | in    ! Inches
+            | cm    ! Centimeters
+            | mm    ! Millimeters. 
+            | pt    ! Points (72 points = 6 picas = 1 inch) 
+            | pc    ! Picas (1 pica = 12 points)
+
+
+<Important Opt> ::= '!important' 
+                  |
+
+
+<Pseudo Class>  ::= ':active'
+                  | ':first-letter'
+                  | ':first-line'
+                  | ':hover'
+                  | ':link'
+                  | ':visited'
+ 
+                  | '@font-face'                 
+                  | '@media'
+
+                  | '@charset'
+                  | '@import'
+
+ 
+
+
+ 

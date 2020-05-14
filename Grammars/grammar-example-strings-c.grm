@@ -1,0 +1,22 @@
+
+"Name"         = 'String Terminal Example (Advanced)'
+"Author"       = 'Devin Cook'
+"About"        = 'This is a simple example which defines a C style string' 
+
+"Start Symbol" = <Value>
+
+! The following contains a much more complex definition for 
+! strings. The backslash character '\' now acts as an 
+! override and can be used to represent the double-quote 
+! character. Essentially, the string terminal is now a series 
+! of any printable character (not including the double-quote 
+! and backslash) and any printable character preceded by the 
+! backslash. 
+
+{String Ch} = {Printable} - ["\]
+
+String = '"' ( {String Ch} | '\'{Printable} )* '"'
+
+
+<Value>   ::= String
+

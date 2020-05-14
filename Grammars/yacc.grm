@@ -1,0 +1,103 @@
+! -----------------------------------------------------------------------
+! YACC
+!
+! Yet Another Compiler-Compiler
+!
+! One of the oldest and most respected parsing engine generators available to 
+! developers is YACC. Like "vi" "grep" and "awk", this software is considered 
+! the de facto standard in the UNIX world. YACC, which is an acronym for Yet 
+! Another Compiler-Compiler, was developed by Stephen C. Johnson at AT&T 
+! YACC can be used to create parsers using the C and C++ programming 
+! languages. 
+! 
+! The term "YACC" actually refers to two separate compiler-compilers, "lex" and 
+! "yacc", which constitute the development platform. Each application is used 
+! to generate a different part of the parsing system and, in turn, use 
+! different input files with the same generic format, but varying semantics. 
+! 
+! The "lex" application generates a new program called "lex.yy.c" which 
+! implements the tokenizer using a Deterministic Finite Automaton. The other 
+! application, "yacc", generates a new program called "y.tab.c" which 
+! implements a LALR parsing algorithm. Once each application has created their 
+! respective program, both can be combined to create the complete system. 
+! 
+! Grammar version 3 
+! 
+! -----------------------------------------------------------------------
+
+
+"Name"    = 'YACC'
+"Author"  = 'Stephen C. Johnson'
+"Version" = '1979'
+"About"   = 'YACC, Yet Another Compiler-Compiler, is the oldest and most'
+          | 'respected parser generators available.'
+
+
+"Start Symbol"  = <YACC Grammar>
+
+
+!=========================================================================
+
+{ID Tail}         = {AlphaNumeric} + [_]
+{Literal Char}    = {Printable} - ['']
+{Code Char}       = {Printable} - [{}]
+{Embed Char}      = {Printable} + {Whitespace}
+{Union Name Char} = {AlphaNumeric} + [_]
+
+Identifier        = {Letter}{ID Tail}*
+Literal           = ''   {Literal Char}+    ''
+DeclarationCode   = '%{' {Embed Char}*      '%}'
+UnionName         = '<'  {Union Name Char}+ '>'         !THIS IS NOT A NONTERMINAL 
+SourceCode        = '{'  {Code Char}*       '}'
+
+Comment Start = '/*'
+Comment End   = '*/'
+Comment Line  = '//'
+
+! =========================================================================
+
+<YACC Grammar> ::= <Tokens> '%%' <Rules> <End Marker Opt>
+                                 
+
+<Tokens>   ::= <Token> <Tokens>
+             | 
+                      
+<Token>    ::= '%start' Identifier  
+             | '%union' SourceCode
+             | '%token'    <Union Name Opt>  <Symbols>
+             | '%left'     <Union Name Opt>  <Symbols>
+             | '%right'    <Union Name Opt>  <Symbols>
+             | '%nonassoc' <Union Name Opt>  <Symbols>       
+             | '%type'     <Union Name Opt>  <Symbols>
+             | DeclarationCode            
+
+<Symbols>  ::= <Symbols> <Symbol>
+             | <Symbol>
+
+<Symbol>       ::= Identifier 
+                 | Literal          
+
+<End Marker Opt>  ::= '%%' 
+                    | 
+
+<Union Name Opt>  ::= UnionName
+                    | 
+
+! ============================================================================
+
+<Rules> ::= <Rules> <Rule> 
+          |
+
+<Rule> ::= Identifier ':' <Rule Body> ';'
+
+<Rule Body>      ::= <Rule Body> '|' <Rule Handle>
+                   | <Rule Handle>
+
+<Rule Handle>    ::= <Symbols> <Prec Opt> <SourceCode Opt>
+                   |                      <SourceCode Opt>
+                
+<Prec Opt>       ::= '%prec' <Symbol>
+                   | 
+                
+<SourceCode Opt> ::= SourceCode
+                   |
