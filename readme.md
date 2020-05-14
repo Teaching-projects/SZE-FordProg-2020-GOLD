@@ -22,7 +22,7 @@ Yeah, that's true, however not in cross-platform manner (the Builder is only Win
   * Modernization:
     * original ArrayList types changed to generic List<T> type
     * public fields and methods related to these fields changed to properties
-    * unsued types (e.g. IntegerList) wiped out and replaced with generic ones
+    * unused types (e.g. IntegerList) wiped out and replaced with generic ones
     * debug mode added (only works within CLI apps)
   * Universal parsing app created
 
@@ -31,7 +31,7 @@ Yeah, that's true, however not in cross-platform manner (the Builder is only Win
   - Download the parser app from releases tab.
   - Start the parser app from a Prompt/Terminal with [-f] switch followed by the absolute path of the grammar file.
   - Type in the syntax that is waiting to be parsed.
-  - Read the response and repeat as many times you want.
+  - Read the response and repeat as many times as you want.
   - Type "exit" for quit from the app.
 
 # Example
