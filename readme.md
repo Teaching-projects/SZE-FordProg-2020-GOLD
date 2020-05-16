@@ -89,5 +89,5 @@ Type your syntax here: a+b
 Type your syntax here: exit
 ```
 
-# Remarks, licence
+# Remarks, license
 This project was created within the scope of the subject of Compilers and it's results may only be used for academic purposes only with the permission of the responsible teacher or those who involved in the development of this project  (including the developers of the original GOLD project).
