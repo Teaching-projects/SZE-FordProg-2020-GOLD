@@ -1,8 +1,8 @@
 # What this project is all about?
-The aim of this project is to generally get to know how parser generators work. Throughout my learning path I'm using a long forgotten but much as good LALR type parsing system called Grammar Oriented Language Developer aka GOLD (http://www.goldparser.org/grammars/index.htm).
+The aim of this project is to generally get to know how parser generators work. Throughout my learning path I'm using a long forgotten but much as good LALR type parsing system called Grammar Oriented Language Developer aka GOLD (http://www.goldparser.org/download.htm).
 
 # What are the aims of this project?
-Besides the upper mentioned goals, my aim is to create a cross-platform (Windows/Linux/OSX) parser that can parse and debug grammars in "real-time" created by GOLD Builder.
+Besides the upper mentioned goals, my aim is to create a cross-platform (Windows/Linux/OSX) parser that can parse and debug grammars in "real-time" created by GOLD Builder (Windows-only).
 
 #### Fine, but can't you test your grammar out-of-the-box inside the Builder?!
 Yeah, that's true, however not in cross-platform manner (the Builder is only Windows compatible)... anyway it just wouldn't be that much fun.
@@ -89,5 +89,5 @@ Type your syntax here: a+b
 Type your syntax here: exit
 ```
 
-# Remarks, licence
+# Remarks, license
 This project was created within the scope of the subject of Compilers and it's results may only be used for academic purposes only with the permission of the responsible teacher or those who involved in the development of this project  (including the developers of the original GOLD project).
