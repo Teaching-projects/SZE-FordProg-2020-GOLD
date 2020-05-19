@@ -12,27 +12,48 @@ namespace GOLD.Parser
         {
             int l = args.Length;
             string path = string.Empty;
-            for (int i = 0; i < l; i++)
-            {
-                switch (args[i].ToLower())
-                {
-                    case "-f":
-                        path = args[i + 1];
-                        break;
+            ushort outputSize = 120;
 
+            try
+            {
+                for (int i = 0; i < l; i++)
+                {
+                    switch (args[i].ToLower())
+                    {
+                        case "-f":
+                            path = args[i + 1];
+                            if (string.IsNullOrWhiteSpace(path) || !File.Exists(path))
+                                Error("Error: no EGT file found!", true);
+                            break;
+                        case "-s":
+                            bool parsed = ushort.TryParse(args[i + 1], out outputSize);
+                            if (!parsed)
+                                Error("Error: cannot set size parameter!", true);
+                            break;
+
+                    }
                 }
             }
-
-            if (string.IsNullOrWhiteSpace(path) || !File.Exists(path))
+            catch (IndexOutOfRangeException ex)
             {
-                Console.WriteLine("Error: no EGT file found!");
-                Console.WriteLine("Press any key to continue...");
-                Console.ReadKey();
-                return;
+                Error("Error: parameter missing.", true);
             }
 
+            p.OutputMaxLength = outputSize;
             p.LoadTables(path);
             RecursiveParse();
+        }
+
+        static void Error(string msg, bool exitApp = false)
+        {
+            Console.WriteLine(msg);
+
+            if (exitApp)
+            {
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+                Environment.Exit(0);
+            }
         }
 
         static void RecursiveParse()

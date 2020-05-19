@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "GOLD.Parser": {
+      "commandName": "Project",
+      "commandLineArgs": "-f \"custom.egt\" -s 120"
+    }
+  }
+}

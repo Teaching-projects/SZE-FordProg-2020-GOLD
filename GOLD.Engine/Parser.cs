@@ -14,7 +14,7 @@ namespace GOLD.Engine
         private string lookaheadBuffer;
         private LRStateList lrStates;
         private int currentLALR;
-        public Stack<Token> stack;
+        private Stack<Token> stack;
         private bool haveReduction;
         private Queue<Token> inputTokens;
         private TextReader source;
@@ -57,6 +57,7 @@ namespace GOLD.Engine
                 return inputTokens.Peek();
             }
         }
+        public ushort OutputMaxLength { get; set; }
 
         public Parser()
         {
@@ -610,7 +611,7 @@ namespace GOLD.Engine
             if (!IsTablesLoaded)
             {
                 if(debug)
-                    Console.WriteLine("\tThis error occurs if the EGT was not loaded.");
+                    WriteOutput("This error occurs if the EGT was not loaded.");
 
                 return ParseMessage.NotLoadedError;
             }
@@ -624,7 +625,7 @@ namespace GOLD.Engine
                     PushInput(ProduceToken());
 
                     if (debug)
-                        Console.WriteLine("\tSymbol read: {0};\tToken created: {1};\tOn stack: {2}", (string)CurrentToken.Data, CurrentToken.Parent.Name, GetStackState());
+                        WriteOutput("Symbol read: '" + (string)CurrentToken.Data + "';", "Token created: '" + CurrentToken.Parent.Name + "';", "On stack: " + GetStackState() + ";");
 
                     result = ParseMessage.TokenRead;
                     done = true;
@@ -636,7 +637,7 @@ namespace GOLD.Engine
                     if (groupStack.Count != 0) // Runaway group
                     {
                         if(debug)
-                            Console.WriteLine("\tGROUP ERROR! Unexpected end of file.");
+                            WriteOutput("GROUP ERROR! Unexpected end of file.");
 
                         result = ParseMessage.GroupError;
                         done = true;
@@ -644,14 +645,14 @@ namespace GOLD.Engine
                     else if (read.Type == SymbolType.Noise) // Just discard. These were already reported to the user.
                     {
                         if (debug)
-                            Console.WriteLine("\tNoise left.");
+                            WriteOutput("Noise left.");
 
                         inputTokens.Dequeue();
                     }
                     else if (read.Type == SymbolType.Error)
                     {
                         if (debug)
-                            Console.WriteLine("\tCannot recognize token: " + CurrentToken.Data);
+                            WriteOutput("Cannot recognize token: '" + CurrentToken.Data + "'");
 
                         result = ParseMessage.LexicalError;
                         done = true;
@@ -662,7 +663,7 @@ namespace GOLD.Engine
                         {
                             case ParseResult.Accept:
                                 if(debug)
-                                    Console.WriteLine("\tAccepted!");
+                                    WriteOutput("Accepted!");
 
                                 result = ParseMessage.Accept;
                                 done = true;
@@ -671,28 +672,28 @@ namespace GOLD.Engine
                                 // ParseToken() shifted the token on the front of the Token-Queue. 
                                 // It now exists on the Token-Stack and must be eliminated from the queue.
                                 if(debug)
-                                    Console.WriteLine("\tShift token: {0};\tOn stack: {1}", CurrentToken.Parent.Name, GetStackState());
+                                    WriteOutput("Shift token: '" + CurrentToken.Parent.Name + "';", "", "On stack: " + GetStackState() + ";");
 
                                 inputTokens.Dequeue();
                                 break;
                             case ParseResult.ReduceNormal:
 
                                 if (debug)
-                                    Console.WriteLine("\tLookahead: '{0}';\tReduce: '{1}';\tOn stack: {2}", CurrentToken.Parent.Name, ((Reduction)CurrentReduction).Parent.Head.Name, GetStackState());
+                                    WriteOutput("Lookahead: '" + CurrentToken.Parent.Name + "';", "Reduce: '" + ((Reduction)CurrentReduction).Parent.Head.Name + "';", "On stack: " + GetStackState() + ";");
 
                                 result = ParseMessage.Reduction;
                                 done = true;
                                 break;
                             case ParseResult.SyntaxError:
                                 if(debug)
-                                    Console.WriteLine("\tExpecting a different token");
+                                    WriteOutput("Different token sexpected.");
 
                                 result = ParseMessage.SyntaxError;
                                 done = true;
                                 break;
                             case ParseResult.InternalError:
-                                if(debug)
-                                    Console.WriteLine("\tINTERNAL ERROR! Something is horribly wrong.");
+                                if (debug)
+                                    WriteOutput("INTERNAL ERROR! Something is horribly wrong.");
 
                                 result = ParseMessage.InternalError;
                                 done = true;
@@ -704,17 +705,30 @@ namespace GOLD.Engine
             return result;
         }
 
+        private void WriteOutput(params string[] message)
+        {
+            int sectionLength = OutputMaxLength / message.Length - 1;
+            for (int i = 0; i < message.Length; i++)
+            {
+                string msg = string.Empty;
+                if (message[i].Length > sectionLength)
+                    msg = message[i].Substring(0, sectionLength - 3) + "...";
+                else if (message[i].Length < sectionLength)
+                    msg = message[i] + new string(' ', sectionLength - message[i].Length);
+                else
+                    msg = message[i];
+
+                Console.Write(msg + " ");
+            }
+            Console.WriteLine();
+        }
+
         private string GetStackState()
         {
             var x = stack.ToList();
             x.RemoveAt(x.Count - 1);
             x.Reverse();
-            string onStack = string.Empty;
-            for (int i = 0; i < x.Count; i++)
-            {
-                onStack += "'" + x[i].Parent.Name + "' ";
-            }
-
+            string onStack = string.Join(" ", x.Select(y => "'" + y.Parent.Name + "'"));
             return onStack;
         }
 
