@@ -2,7 +2,7 @@
   "profiles": {
     "GOLD.Parser": {
       "commandName": "Project",
-      "commandLineArgs": "-f \"custom.egt\" -s 120"
+      "commandLineArgs": "-f \"custom.egt\" -s 100"
     }
   }
 }

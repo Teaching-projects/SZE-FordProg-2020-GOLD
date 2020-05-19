@@ -30,6 +30,7 @@ Yeah, that's true, however not in cross-platform manner (the Builder is only Win
   - Generate an EGT grammar file with GOLD Builder or get one from Grammars folder.
   - Download the parser app from releases tab.
   - Start the parser app from a Prompt/Terminal with [-f] switch followed by the absolute path of the grammar file.
+  - Optional: Use [-s] switch followed by the length of the desired output size. Default length: 120 characters.
   - Type in the syntax that is waiting to be parsed.
   - Read the response and repeat as many times as you want.
   - Type "exit" for quit from the app.
@@ -37,27 +38,27 @@ Yeah, that's true, however not in cross-platform manner (the Builder is only Win
 # Example
 ### On Windows:
 ```
-DriveLetter:\path-to-file\GOLD.Parser.exe -f "DriveLetter:\path-to-file\grammar.egt"
+DriveLetter:\path-to-file\GOLD.Parser.exe -f "DriveLetter:\path-to-file\grammar.egt" -s 100
 
 Type your syntax here: a+b
 
-        Symbol read: a;         Token created: Identifier;      On stack:
-        Shift token: Identifier;                                On stack: 'Identifier'
-        Symbol read: +;         Token created: +;               On stack: 'Identifier'
-        Lookahead: '+';         Reduce: 'Value';                On stack: 'Value'
-        Lookahead: '+';         Reduce: 'Negate Exp';           On stack: 'Negate Exp'
-        Lookahead: '+';         Reduce: 'Mult Exp';             On stack: 'Mult Exp'
-        Lookahead: '+';         Reduce: 'Expression';           On stack: 'Expression'
-        Shift token: +;                                         On stack: 'Expression' '+'
-        Symbol read: b;         Token created: Identifier;      On stack: 'Expression' '+'
-        Shift token: Identifier;                                On stack: 'Expression' '+' 'Identifier'
-        Symbol read: ;          Token created: EOF;             On stack: 'Expression' '+' 'Identifier'
-        Lookahead: 'EOF';       Reduce: 'Value';                On stack: 'Expression' '+' 'Value'
-        Lookahead: 'EOF';       Reduce: 'Negate Exp';           On stack: 'Expression' '+' 'Negate Exp'
-        Lookahead: 'EOF';       Reduce: 'Mult Exp';             On stack: 'Expression' '+' 'Mult Exp'
-        Lookahead: 'EOF';       Reduce: 'Expression';           On stack: 'Expression'
-        Lookahead: 'EOF';       Reduce: 'Program';              On stack: 'Program'
-        Accepted!
+Symbol read: 'a';                Token created: 'Identifier';     On stack: ;
+Shift token: 'Identifier';                                        On stack: 'Identifier';
+Symbol read: '+';                Token created: '+';              On stack: 'Identifier';
+Lookahead: '+';                  Reduce: 'Value';                 On stack: 'Value';
+Lookahead: '+';                  Reduce: 'Negate Exp';            On stack: 'Negate Exp';
+Lookahead: '+';                  Reduce: 'Mult Exp';              On stack: 'Mult Exp';
+Lookahead: '+';                  Reduce: 'Expression';            On stack: 'Expression';
+Shift token: '+';                                                 On stack: 'Expression' '+';
+Symbol read: 'b';                Token created: 'Identifier';     On stack: 'Expression' '+';
+Shift token: 'Identifier';                                        On stack: 'Expression' '+' 'I...
+Symbol read: '';                 Token created: 'EOF';            On stack: 'Expression' '+' 'I...
+Lookahead: 'EOF';                Reduce: 'Value';                 On stack: 'Expression' '+' 'V...
+Lookahead: 'EOF';                Reduce: 'Negate Exp';            On stack: 'Expression' '+' 'N...
+Lookahead: 'EOF';                Reduce: 'Mult Exp';              On stack: 'Expression' '+' 'M...
+Lookahead: 'EOF';                Reduce: 'Expression';            On stack: 'Expression';
+Lookahead: 'EOF';                Reduce: 'Program';               On stack: 'Program';
+Accepted!
 
 
 Type your syntax here: exit
@@ -67,23 +68,23 @@ Type your syntax here: exit
 /path-to-file/GOLD.Parser -f "/path-to-file/grammar.egt"
 Type your syntax here: a+b
 
-        Symbol read: a;         Token created: Identifier;      On stack:
-        Shift token: Identifier;                                On stack: 'Identifier'
-        Symbol read: +;         Token created: +;               On stack: 'Identifier'
-        Lookahead: '+';         Reduce: 'Value';                On stack: 'Value'
-        Lookahead: '+';         Reduce: 'Negate Exp';           On stack: 'Negate Exp'
-        Lookahead: '+';         Reduce: 'Mult Exp';             On stack: 'Mult Exp'
-        Lookahead: '+';         Reduce: 'Expression';           On stack: 'Expression'
-        Shift token: +;                                         On stack: 'Expression' '+'
-        Symbol read: b;         Token created: Identifier;      On stack: 'Expression' '+'
-        Shift token: Identifier;                                On stack: 'Expression' '+' 'Identifier'
-        Symbol read: ;          Token created: EOF;             On stack: 'Expression' '+' 'Identifier'
-        Lookahead: 'EOF';       Reduce: 'Value';                On stack: 'Expression' '+' 'Value'
-        Lookahead: 'EOF';       Reduce: 'Negate Exp';           On stack: 'Expression' '+' 'Negate Exp'
-        Lookahead: 'EOF';       Reduce: 'Mult Exp';             On stack: 'Expression' '+' 'Mult Exp'
-        Lookahead: 'EOF';       Reduce: 'Expression';           On stack: 'Expression'
-        Lookahead: 'EOF';       Reduce: 'Program';              On stack: 'Program'
-        Accepted!
+Symbol read: 'a';                       Token created: 'Identifier';            On stack: ;
+Shift token: 'Identifier';                                                      On stack: 'Identifier';
+Symbol read: '+';                       Token created: '+';                     On stack: 'Identifier';
+Lookahead: '+';                         Reduce: 'Value';                        On stack: 'Value';
+Lookahead: '+';                         Reduce: 'Negate Exp';                   On stack: 'Negate Exp';
+Lookahead: '+';                         Reduce: 'Mult Exp';                     On stack: 'Mult Exp';
+Lookahead: '+';                         Reduce: 'Expression';                   On stack: 'Expression';
+Shift token: '+';                                                               On stack: 'Expression' '+';
+Symbol read: 'b';                       Token created: 'Identifier';            On stack: 'Expression' '+';
+Shift token: 'Identifier';                                                      On stack: 'Expression' '+' 'Identifi...
+Symbol read: '';                        Token created: 'EOF';                   On stack: 'Expression' '+' 'Identifi...
+Lookahead: 'EOF';                       Reduce: 'Value';                        On stack: 'Expression' '+' 'Value';
+Lookahead: 'EOF';                       Reduce: 'Negate Exp';                   On stack: 'Expression' '+' 'Negate E...
+Lookahead: 'EOF';                       Reduce: 'Mult Exp';                     On stack: 'Expression' '+' 'Mult Exp';
+Lookahead: 'EOF';                       Reduce: 'Expression';                   On stack: 'Expression';
+Lookahead: 'EOF';                       Reduce: 'Program';                      On stack: 'Program';
+Accepted!
 
 
 Type your syntax here: exit
