@@ -2,7 +2,7 @@
   "profiles": {
     "GOLD.Parser": {
       "commandName": "Project",
-      "commandLineArgs": "-f \"custom.egt\" -s 100"
+      "commandLineArgs": "-g \"obj.egt\" -s 300 -f \"paper_plane.obj\""
     }
   }
 }

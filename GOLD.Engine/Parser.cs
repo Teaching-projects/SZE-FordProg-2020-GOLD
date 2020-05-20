@@ -625,7 +625,14 @@ namespace GOLD.Engine
                     PushInput(ProduceToken());
 
                     if (debug)
-                        WriteOutput("Symbol read: '" + (string)CurrentToken.Data + "';", "Token created: '" + CurrentToken.Parent.Name + "';", "On stack: " + GetStackState() + ";");
+                    {
+                        string data = (string)CurrentToken.Data;
+                        if (data.Equals("\r"))
+                            data = "CR";
+                        if (data.Equals("\n"))
+                            data = "LF";
+                        WriteOutput("Symbol read: '" + data + "';", "Token created: '" + CurrentToken.Parent.Name + "';", "On stack: " + GetStackState() + ";");
+                    }
 
                     result = ParseMessage.TokenRead;
                     done = true;
@@ -679,7 +686,7 @@ namespace GOLD.Engine
                             case ParseResult.ReduceNormal:
 
                                 if (debug)
-                                    WriteOutput("Lookahead: '" + CurrentToken.Parent.Name + "';", "Reduce: '" + ((Reduction)CurrentReduction).Parent.Head.Name + "';", "On stack: " + GetStackState() + ";");
+                                    WriteOutput("Lookahead: '" + CurrentToken.Parent.Name + "';", "Reduce: '" + ((Reduction)CurrentReduction).Parent + "';", "On stack: " + GetStackState() + ";");
 
                                 result = ParseMessage.Reduction;
                                 done = true;

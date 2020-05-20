@@ -11,7 +11,8 @@ namespace GOLD.Parser
         static void Main(string[] args)
         {
             int l = args.Length;
-            string path = string.Empty;
+            string grammarPath = string.Empty;
+            string filePath = string.Empty;
             ushort outputSize = 120;
 
             try
@@ -20,32 +21,40 @@ namespace GOLD.Parser
                 {
                     switch (args[i].ToLower())
                     {
-                        case "-f":
-                            path = args[i + 1];
-                            if (string.IsNullOrWhiteSpace(path) || !File.Exists(path))
-                                Error("Error: no EGT file found!", true);
+                        case "-g":
+                            grammarPath = args[i + 1];
+                            if (string.IsNullOrWhiteSpace(grammarPath) || !File.Exists(grammarPath))
+                                WriteMessage("Error: no EGT file found!", true);
                             break;
                         case "-s":
                             bool parsed = ushort.TryParse(args[i + 1], out outputSize);
                             if (!parsed)
-                                Error("Error: cannot set size parameter!", true);
+                                WriteMessage("Error: cannot set size parameter!", true);
                             break;
-
+                        case "-f":
+                            filePath = args[i + 1];
+                            if (string.IsNullOrWhiteSpace(filePath) || !File.Exists(filePath))
+                                WriteMessage("Error: file not found!", true);
+                            break;
                     }
                 }
             }
-            catch (IndexOutOfRangeException ex)
+            catch (IndexOutOfRangeException)
             {
-                Error("Error: parameter missing.", true);
+                WriteMessage("Error: parameter missing.", true);
             }
 
             p.OutputMaxLength = outputSize;
-            p.LoadTables(path);
-            RecursiveParse();
+            p.LoadTables(grammarPath);
+            if (string.IsNullOrEmpty(filePath))
+                InteractiveParse();
+            else
+                ParseFile(filePath);
         }
 
-        static void Error(string msg, bool exitApp = false)
+        static void WriteMessage(string msg, bool exitApp = false)
         {
+            Console.WriteLine();
             Console.WriteLine(msg);
 
             if (exitApp)
@@ -56,7 +65,38 @@ namespace GOLD.Parser
             }
         }
 
-        static void RecursiveParse()
+        static void ParseFile(string file)
+        {
+            ParseMessage response;
+            TextReader reader = new StreamReader(file);
+            p.Open(reader);
+            p.TrimReductions = false;
+
+            bool done = false;
+            while (!done)
+            {
+                response = p.Parse(true);
+                switch (response)
+                {
+                    case ParseMessage.Accept:
+                    case ParseMessage.SyntaxError:
+                    case ParseMessage.LexicalError:
+                    case ParseMessage.InternalError:
+                    case ParseMessage.NotLoadedError:
+                    case ParseMessage.GroupError:
+                        done = true;
+                        break;
+
+                    case ParseMessage.Reduction:
+                    case ParseMessage.TokenRead:
+                        break;
+                }
+            }
+            reader.Dispose();
+            WriteMessage(string.Empty, true);        
+        }
+
+        static void InteractiveParse()
         {
             ParseMessage response;
             bool done;
@@ -88,27 +128,19 @@ namespace GOLD.Parser
                                 done = true;
                                 break;
 
-                            case ParseMessage.Reduction:
-                                break;
-
                             case ParseMessage.Accept:                        
                                 p.Open(reader);
                                 done = true;
                                 break;
 
-                            case ParseMessage.TokenRead:
-                                break;
-
                             case ParseMessage.InternalError:
-                                done = true;
-                                break;
-
                             case ParseMessage.NotLoadedError:
-                                done = true;
-                                break;
-
                             case ParseMessage.GroupError:
                                 done = true;
+                                break;
+
+                            case ParseMessage.Reduction:
+                            case ParseMessage.TokenRead:
                                 break;
                         }
                     }

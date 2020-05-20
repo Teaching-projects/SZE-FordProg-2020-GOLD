@@ -52,6 +52,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Grammars", "Grammars", "{C3
 		Grammars\JSON.grm = Grammars\JSON.grm
 		Grammars\LISP.egt = Grammars\LISP.egt
 		Grammars\LISP.grm = Grammars\LISP.grm
+		Grammars\OBJ.egt = Grammars\OBJ.egt
+		Grammars\OBJ.grm = Grammars\OBJ.grm
 		Grammars\pascal.egt = Grammars\pascal.egt
 		Grammars\pascal.grm = Grammars\pascal.grm
 		Grammars\Simple 2.egt = Grammars\Simple 2.egt
@@ -66,7 +68,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Grammars", "Grammars", "{C3
 		Grammars\yacc.grm = Grammars\yacc.grm
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GOLD.Builder", "GOLD.Builder\GOLD.Builder.csproj", "{1F0FE5B2-5140-461D-A51F-0C7497EDD644}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReferenceFiles", "ReferenceFiles", "{C8FC4C76-7A07-4EBC-8F4A-DAF6F09C0DDF}"
+	ProjectSection(SolutionItems) = preProject
+		ReferenceFiles\paper_plane.obj = ReferenceFiles\paper_plane.obj
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -82,16 +87,13 @@ Global
 		{9D077079-1406-4721-BE9C-AE92F24995C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D077079-1406-4721-BE9C-AE92F24995C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D077079-1406-4721-BE9C-AE92F24995C4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1F0FE5B2-5140-461D-A51F-0C7497EDD644}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1F0FE5B2-5140-461D-A51F-0C7497EDD644}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1F0FE5B2-5140-461D-A51F-0C7497EDD644}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1F0FE5B2-5140-461D-A51F-0C7497EDD644}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C3C0877A-F3E2-437A-A3ED-2D24DCF1DD4B} = {AA94A9B4-2F26-4B9B-A355-BC577BD1CE16}
+		{C8FC4C76-7A07-4EBC-8F4A-DAF6F09C0DDF} = {AA94A9B4-2F26-4B9B-A355-BC577BD1CE16}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {51BCEFCE-0375-415A-B77C-8C9FA3C6D8B9}

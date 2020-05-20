@@ -1,0 +1,114 @@
+﻿"Name"     = 'OBJ'
+"Author"   = 'Balog Ferenc'
+"Version"  = '1.0'
+"About"    = 'Wavefront object file format grammar.'
+
+"Start Symbol" = <Start>
+
+! -------------------------------------------------
+! Character Sets
+! -------------------------------------------------
+
+{WS}               = {Whitespace} - {CR} - {LF}
+{NoSpcPrint}       = {Printable} - {Space}        
+
+! -------------------------------------------------
+! Terminals
+! -------------------------------------------------
+
+Whitespace    = {WS}+
+              
+NewLine       = {CR}{LF} | {CR} | {LF}
+              
+Comm          = '#'{Printable}*
+              
+Float         = '-'?{Number}('.'{Number}+|'.'{Number}+'e''-'?{Number}+)?{Space}*            
+              
+Simplet       = '-'?{Number}+{Space}'-'?{Number}+{Space}'-'?{Number}+({Space}'-'?{Number}+)*
+              
+Duplet        = '-'?{Number}+[/]'-'?{Number}+{Space}'-'?{Number}+[/]'-'?{Number}+{Space}'-'?{Number}+[/]'-'?{Number}+({Space}'-'?{Number}+[/]'-'?{Number}+)*
+              
+Triplet       = '-'?{Number}+[/]('-'{Number}*|{Number}*)[/]'-'?{Number}+{Space}'-'{Number}+'/]'('-'{Number}*|{Number}*)'/''-'?{Number}+{Space}'-'?{Number}+'/'('-'{Number}*|{Number}*)'/''-'?{Number}+({Space}'-'?{Number}+'/'('-'{Number}*|{Number}*)'/''-'?{Number}+)*
+
+V             = 'v'{Space}
+              
+VP            = 'vp'{Space}
+              
+VN            = 'vn'{Space}
+              
+VT            = 'vt'{Space}  
+                                 
+F             = 'f'{Space}
+              
+L             = 'l'{Space}
+              
+P             = 'p'{Space}
+              
+O             = 'o' | 'o'{Space}{NoSpcPrint}+
+              
+G             = 'g' | 'g'{Space}{NoSpcPrint}+
+              
+S             = 's' | 's'{Space}{NoSpcPrint}+
+              
+MTLLib        = 'mtllib'{Space}{Printable}+
+              
+UseMTL        = 'usemtl'{Space}{NoSpcPrint}+
+
+! -------------------------------------------------
+! Rules
+! -------------------------------------------------
+
+<nl> ::= NewLine <nl>
+      |  !Empty
+
+<Comment> ::= Comm  
+     
+<Geovertex> ::= V Float Float Float
+             |  V Float Float Float Float
+             
+<TextureCoordinate> ::= VT Float
+                     | VT Simplet
+                     | VT Float Float Float
+             
+<VertexNormal> ::= VN Float Float Float
+                
+<SpaceVertex> ::= VP Float
+               | VP Simplet
+               | VP Float Float
+               | VP Float Float Float
+               
+<Face> ::= F Simplet 
+        | F Duplet 
+        | F Triplet
+        
+<Line> ::= L Simplet
+        | L Duplet 
+        
+<Point> ::= P Simplet
+         
+<Materials> ::= MTLLib
+             
+<UseMaterial> ::= UseMTL
+               
+<Object> ::= O
+          
+<Group> ::= G
+         
+<Smoothing> ::= S 
+
+<Start>   ::= <nl> <Program>
+
+<Program> ::= <Comment> <nl> <Program>
+           | <Geovertex> <nl> <Program>
+           | <TextureCoordinate> <nl> <Program>
+           | <VertexNormal> <nl> <Program>
+           | <SpaceVertex> <nl> <Program>
+           | <Face> <nl> <Program>
+           | <Line> <nl> <Program>
+           | <Point> <nl> <Program>
+           | <Materials> <nl> <Program>
+           | <UseMaterial> <nl> <Program>
+           | <Object> <nl> <Program>
+           | <Group> <nl> <Program>
+           | <Smoothing> <nl> <Program>
+           | !Empty
