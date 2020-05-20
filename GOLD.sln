@@ -68,9 +68,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Grammars", "Grammars", "{C3
 		Grammars\yacc.grm = Grammars\yacc.grm
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReferenceFiles", "ReferenceFiles", "{C8FC4C76-7A07-4EBC-8F4A-DAF6F09C0DDF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestFiles", "TestFiles", "{C8FC4C76-7A07-4EBC-8F4A-DAF6F09C0DDF}"
 	ProjectSection(SolutionItems) = preProject
-		ReferenceFiles\paper_plane.obj = ReferenceFiles\paper_plane.obj
+		TestFiles\paper_plane.obj = TestFiles\paper_plane.obj
 	EndProjectSection
 EndProject
 Global
