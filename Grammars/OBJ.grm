@@ -26,9 +26,9 @@ Float         = '-'?{Number}('.'{Number}+|'.'{Number}+'e''-'?{Number}+)?{Space}*
               
 Simplet       = '-'?{Number}+{Space}'-'?{Number}+{Space}'-'?{Number}+({Space}'-'?{Number}+)*
               
-Duplet        = '-'?{Number}+[/]'-'?{Number}+{Space}'-'?{Number}+[/]'-'?{Number}+{Space}'-'?{Number}+[/]'-'?{Number}+({Space}'-'?{Number}+[/]'-'?{Number}+)*
+Duplet        = '-'?{Number}+'/''-'?{Number}+{Space}'-'?{Number}+'/''-'?{Number}+{Space}'-'?{Number}+'/''-'?{Number}+({Space}'-'?{Number}+'/''-'?{Number}+)*
               
-Triplet       = '-'?{Number}+[/]('-'{Number}*|{Number}*)[/]'-'?{Number}+{Space}'-'{Number}+'/]'('-'{Number}*|{Number}*)'/''-'?{Number}+{Space}'-'?{Number}+'/'('-'{Number}*|{Number}*)'/''-'?{Number}+({Space}'-'?{Number}+'/'('-'{Number}*|{Number}*)'/''-'?{Number}+)*
+Triplet       = '-'?{Number}+'/'('-'{Number}*|{Number}*)'/''-'?{Number}+{Space}'-'{Number}+'/'('-'{Number}*|{Number}*)'/''-'?{Number}+{Space}'-'?{Number}+'/'('-'{Number}*|{Number}*)'/''-'?{Number}+({Space}'-'?{Number}+'/'('-'{Number}*|{Number}*)'/''-'?{Number}+)*
 
 V             = 'v'{Space}
               
